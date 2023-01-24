@@ -1,24 +1,24 @@
-</html>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-us">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Testing Avatar Creation</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | Avatar Generator</title>
   </head>
   <body style="text-align: center">
     <canvas id="unity-canvas" width=800 height=600 style="width: 800px; height: 600px; background: #231F20"></canvas>
-    <script src="Build/POCAvatarV6.loader.js"></script>
+    <script src="Build/POCA.loader.js"></script>
     <script>
       createUnityInstance(document.querySelector("#unity-canvas"), {
-        dataUrl: "Build/POCAvatarV6.data.br",
-        frameworkUrl: "Build/POCAvatarV6.framework.js.br",
-        codeUrl: "Build/POCAvatarV6.wasm.br",
+        dataUrl: "Build/POCA.data",
+        frameworkUrl: "Build/POCA.framework.js",
+        codeUrl: "Build/POCA.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Novathena",
         productName: "Avatar Generator",
         productVersion: "0.1.1",
+        // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
+        // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
       });
     </script>
   </body>
