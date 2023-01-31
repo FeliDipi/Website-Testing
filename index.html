@@ -22,33 +22,47 @@
         // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
         // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
       });
-
-      function LoadImage()
-      {
-        var key = "/idbfs/35b01a37257e38e17b4d0200d9f817d5/Screenshots/avatar.png";
-        window.alert('Recive Texture from: ' + key);
-
-        const img = document.getElementById('display_image');
-
-        window.indexedDB = window.indexedDB;
-        dbVersion = 1;
+      
+      function LoadImage() {
+        // IndexedDB
+        var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.OIndexedDB || window.msIndexedDB,
+            IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.OIDBTransaction || window.msIDBTransaction,
+            dbVersion = 1.0;
 
         let db;
-        var request = indexedDB.open("/idbfs", dbVersion);
+        var key = "/idbfs/35b01a37257e38e17b4d0200d9f817d5/Screenshots/avatar.png";
 
-        request.onsuccess = function (e){
-          console.log('Sucess open indexedDB');
-          db = e.target.result;
+        // Create/open database
+        var request = indexedDB.open("/idbfs", dbVersion)
+        request.onsuccess = function(e){
+
+            console.log("Success creating/accessing IndexedDB database");
+
+            db = request.result;
+            var transaction = db.transaction(["FILE_DATA"], IDBTransaction.READ_WRITE);
+            transaction.objectStore("FILE_DATA").get(key).onsuccess = function (event) {
+                var imgFile = event.target.result;
+                console.log("Got image!" + imgFile);
+
+                // Get window.URL object
+                var URL = window.URL || window.webkitURL;
+
+                // Create and revoke ObjectURL
+                var imgURL = URL.createObjectURL(imgFile);
+
+                // Set img src to ObjectURL
+                var imgElephant = document.getElementById("display_image");
+                imgElephant.setAttribute("src", imgURL);
+
+                // Revoking ObjectURL
+                URL.revokeObjectURL(imgURL);
+            };
         }
 
-        let trans = db.transaction(['FILE_DATA'], 'readonly');
-        let req = trans.objectStore('FILE_DATA').get(key);
-        req.onsuccess = function(e) {
-          var record = e.target.result;
-          console.log('get success', record);
-          img.src = 'data:image/jpeg;base64,' + btoa(record.data);
+        request.onerror = function (event) {
+            console.log("Error creating/accessing IndexedDB database");
+        };
       }
-    }
     </script>
   </body>
 </html>
