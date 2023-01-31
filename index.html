@@ -23,6 +23,10 @@
       });
 
       function LoadImage(key) {
+
+        window.alert(key);
+        console.log(key);
+
         // IndexedDB
         var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.OIndexedDB || window.msIndexedDB,
             IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.OIDBTransaction || window.msIDBTransaction,
