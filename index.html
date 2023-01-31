@@ -8,13 +8,12 @@
   <body style="text-align: center">
     <canvas id="unity-canvas" width=800 height=600 style="width: 800px; height: 600px; background: #231F20"></canvas>
     <img id="display_image" src="" alt="">
-    <button onclick="LoadImage()">Load Image</button>
-    <script src="Build/POCAT12.loader.js"></script> 
+    <script src="Build/POCAT14.loader.js"></script>
     <script>
       createUnityInstance(document.querySelector("#unity-canvas"), {
-        dataUrl: "Build/POCAT12.data",
-        frameworkUrl: "Build/POCAT12.framework.js",
-        codeUrl: "Build/POCAT12.wasm",
+        dataUrl: "Build/POCAT14.data",
+        frameworkUrl: "Build/POCAT14.framework.js",
+        codeUrl: "Build/POCAT14.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Novathena",
         productName: "Avatar Generator",
@@ -23,15 +22,13 @@
         // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
       });
 
-      function LoadImage() {
+      function LoadImage(key) {
         // IndexedDB
         var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.OIndexedDB || window.msIndexedDB,
             IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.OIDBTransaction || window.msIDBTransaction,
             dbVersion = 21;
 
         let db;
-        var key = "/idbfs/35b01a37257e38e17b4d0200d9f817d5/Screenshots/avatar.png";
-
         // Create/open database
         var request = indexedDB.open("/idbfs", dbVersion)
         request.onsuccess = function(e){
