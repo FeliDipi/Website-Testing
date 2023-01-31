@@ -8,7 +8,7 @@
   <body style="text-align: center">
     <canvas id="unity-canvas" width=800 height=600 style="width: 800px; height: 600px; background: #231F20"></canvas>
     <img id="display_image" src="" alt="">
-    <button onclick="LoadImage">Load Image</button>
+    <button onclick="LoadImage()">Load Image</button>
     <script src="Build/POCAT12.loader.js"></script> 
     <script>
       createUnityInstance(document.querySelector("#unity-canvas"), {
@@ -22,7 +22,7 @@
         // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
         // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
       });
-      
+
       function LoadImage() {
         // IndexedDB
         var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.OIndexedDB || window.msIndexedDB,
