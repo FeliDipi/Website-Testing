@@ -42,20 +42,14 @@
             var transaction = db.transaction(["FILE_DATA"], IDBTransaction.READ_WRITE);
             transaction.objectStore("FILE_DATA").get(key).onsuccess = function (event) {
                 var imgFile = event.target.result;
-                console.log("Got image!" + imgFile);
-
-                // Get window.URL object
-                var URL = window.URL || window.webkitURL;
+                console.log(imgFile);
 
                 // Create and revoke ObjectURL
-                var imgURL = URL.createObjectURL(imgFile);
+                var imgURL = (window.URL) ? window.URL.createObjectURL(imgFile) : window.webkitURL.createObjectURL(imgFile);
 
                 // Set img src to ObjectURL
-                var imgElephant = document.getElementById("display_image");
-                imgElephant.setAttribute("src", imgURL);
-
-                // Revoking ObjectURL
-                URL.revokeObjectURL(imgURL);
+                var img = document.getElementById("display_image");
+                img.setAttribute("src", imgURL);
             };
         }
 
