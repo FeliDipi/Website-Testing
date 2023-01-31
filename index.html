@@ -7,7 +7,9 @@
   </head>
   <body style="text-align: center">
     <canvas id="unity-canvas" width=800 height=600 style="width: 800px; height: 600px; background: #231F20"></canvas>
-    <script src="Build/POCAT12.loader.js"></script>
+    <img id="display_image" src="" alt="">
+    <button onclick="LoadImage">Load Image</button>
+    <script src="Build/POCAT12.loader.js"></script> 
     <script>
       createUnityInstance(document.querySelector("#unity-canvas"), {
         dataUrl: "Build/POCAT12.data",
@@ -20,6 +22,33 @@
         // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
         // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
       });
+
+      function LoadImage()
+      {
+        var key = "/idbfs/35b01a37257e38e17b4d0200d9f817d5/Screenshots/avatar.png";
+        window.alert('Recive Texture from: ' + key);
+
+        const img = document.getElementById('display_image');
+
+        window.indexedDB = window.indexedDB;
+        dbVersion = 1;
+
+        let db;
+        var request = indexedDB.open("/idbfs", dbVersion);
+
+        request.onsuccess = function (e){
+          console.log('Sucess open indexedDB');
+          db = e.target.result;
+        }
+
+        let trans = db.transaction(['FILE_DATA'], 'readonly');
+        let req = trans.objectStore('FILE_DATA').get(key);
+        req.onsuccess = function(e) {
+          var record = e.target.result;
+          console.log('get success', record);
+          img.src = 'data:image/jpeg;base64,' + btoa(record.data);
+      }
+    }
     </script>
   </body>
 </html>
