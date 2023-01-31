@@ -44,7 +44,7 @@
                 var imgFile = event.target.result;
                 console.log(imgFile);
 
-                var blob = new Blob(imgFile, { type: "image/png" });
+                var blob = new Blob([imgFile.contents], { type: "image/png" });
 
                 // Create and revoke ObjectURL
                 var imgURL = (window.URL) ? window.URL.createObjectURL(blob) : window.webkitURL.createObjectURL(blob);
