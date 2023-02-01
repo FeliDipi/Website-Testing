@@ -1,5 +1,5 @@
-const $UnityInstance = document.getElementById("unity-canvas");
-const $input = document.getElementById("input-capture");
+let UnityInstance = document.getElementById("unity-canvas");
+let input = document.getElementById("input-capture");
 $input.onchange = function(e){
     const [file] = $input.files;
     if (file) {
@@ -7,8 +7,6 @@ $input.onchange = function(e){
         UnityInstance.SendMessage('BrowserHook', 'SetCaptureURL', captureURL);
     }
   }
-
-const $img = document.getElementById("avatar-image");
 
 function LoadImage(key) {
 
@@ -36,7 +34,8 @@ function LoadImage(key) {
             var imgURL = (window.URL) ? window.URL.createObjectURL(blob) : window.webkitURL.createObjectURL(blob);
 
             // Set img src to ObjectURL
-            $img.setAttribute("src", imgURL);
+            let img = document.getElementById("avatar-image");
+            img.setAttribute("src", imgURL);
         };
     }
 
