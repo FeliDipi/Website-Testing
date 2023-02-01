@@ -19,7 +19,7 @@ const $buttonSnap = document.getElementById("button-capture");
 $buttonSnap.addEventListener("click",(e)=>
 {
     contextCapture.drawImage($videoCapture,0,0,$canvasCapture.width,$canvasCapture.height);
-    let realtimeCaptureURL = $canvasCapture.toDataURL();
+    let realtimeCaptureURL = $canvasCapture.toDataURL('image/jpeg');
 
     unityAvatarInstance.SendMessage('BrowserCallback', 'SetCaptureURL', realtimeCaptureURL);
 });
@@ -68,7 +68,7 @@ function ActiveWebCam()
     {
         navigator.mediaDevices.getUserMedia({video:true}).then((stream)=>{
             $videoCapture.srcObject = stream;
-            $videoCapture.onplay();
+            $videoCapture.play();
         });
     }
 }
