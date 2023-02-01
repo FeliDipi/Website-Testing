@@ -4,7 +4,7 @@ $input.addEventListener("change", (e)=>
     const [file] = $input.files;
     if (file) {
         var captureURL = URL.createObjectURL(file);
-        unityAvatarInstance.SendMessage('BrowserHook', 'SetCaptureURL', captureURL);
+        unityAvatarInstance.SendMessage('BrowserCallback', 'SetCaptureURL', captureURL);
     }
 });
 
