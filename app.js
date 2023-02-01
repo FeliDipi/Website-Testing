@@ -24,6 +24,8 @@ $buttonSnap.addEventListener("click",(e)=>
     unityAvatarInstance.SendMessage('BrowserCallback', 'SetCaptureURL', realtimeCaptureURL);
 });
 
+ActiveWebCam();
+
 function LoadImage(key) {
 
     console.log("Avatar Capture key: " + key);
