@@ -1,6 +1,6 @@
 let input = document.getElementById("input-capture");
-$input.onchange = function(e){
-    const [file] = $input.files;
+input.onchange = function(e){
+    const [file] = input.files;
     if (file) {
         var captureURL = URL.createObjectURL(file);
         unityAvatarInstance.SendMessage('BrowserHook', 'SetCaptureURL', captureURL);
