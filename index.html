@@ -7,7 +7,17 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body style="text-align: center">
-    <input id="input-capture" type="file" accept="image/png, image/jpeg">
+    <div id="content-capture">
+      <div id="upload-capture">
+        <input id="input-capture" type="file" accept="image/png, image/jpeg">
+        <img id="image-capture" src="">
+      </div>
+      <div id="realtime-capture">
+        <video id="video-capture" width="640" height="480" muted autoplay></video>
+        <button id="button-capture">Take Photo</button>
+        <canvas id="snap-capture" width="640" height="480"></canvas>
+      </div> 
+    </div>
     <canvas id="unity-canvas" width=800 height=600 style="width: 800px; height: 600px; background: #231F20"></canvas>
     <img id="avatar-image" src="" alt="">
     <script src="Build/POCAT14.loader.js"></script>

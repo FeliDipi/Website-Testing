@@ -4,8 +4,24 @@ $input.addEventListener("change", (e)=>
     const [file] = $input.files;
     if (file) {
         var captureURL = URL.createObjectURL(file);
+        let imgCapture = document.getElementById("image-capture");
+        imgCapture.setAttribute("src", captureURL);
+
         unityAvatarInstance.SendMessage('BrowserCallback', 'SetCaptureURL', captureURL);
     }
+});
+
+const $videoCapture = document.getElementById("video-capture");
+const $canvasCapture = document.getElementById("snap-capture");
+let contextCapture = $canvasCapture.getContext("2d");
+
+const $buttonSnap = document.getElementById("button-capture");
+$buttonSnap.addEventListener("click",(e)=>
+{
+    contextCapture.drawImage($videoCapture,0,0,$canvasCapture.width,$canvasCapture.height);
+    let realtimeCaptureURL = $canvasCapture.toDataURL();
+
+    unityAvatarInstance.SendMessage('BrowserCallback', 'SetCaptureURL', realtimeCaptureURL);
 });
 
 function LoadImage(key) {
@@ -42,4 +58,15 @@ function LoadImage(key) {
     request.onerror = function (event) {
         console.log("Error accessing IndexedDB database");
     };
+}
+
+function ActiveWebCam()
+{
+    if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)
+    {
+        navigator.mediaDevices.getUserMedia({video:true}).then((stream)=>{
+            $videoCapture.srcObject = stream;
+            $videoCapture.onplay();
+        });
+    }
 }

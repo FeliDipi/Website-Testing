@@ -6,3 +6,26 @@ body
     background-color: #C4E3D2;
     flex-direction: column;
 }
+
+#content-capture
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#upload-capture
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#realtime-capture
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
