@@ -1,3 +1,5 @@
+//INPUT CAPTURE
+
 const $input = document.getElementById("input-capture");
 $input.addEventListener("change", (e)=>
 {
@@ -11,10 +13,26 @@ $input.addEventListener("change", (e)=>
     }
 });
 
+//REALTIME CAPTURE
+
 const $videoCapture = document.getElementById("video-capture");
 const $canvasCapture = document.getElementById("snap-capture");
 let contextCapture = $canvasCapture.getContext("2d");
 
+//active webcam to take snap
+const $buttonWebcam = document.getElementById("button-webcam-capture")
+$buttonWebcam.addEventListener("click",(e)=>
+{
+    if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)
+    {
+        navigator.mediaDevices.getUserMedia({video:true}).then((stream)=>{
+            $videoCapture.srcObject = stream;
+            $videoCapture.play();
+        });
+    }
+})
+
+//display capture taked and send capture url to Unity
 const $buttonSnap = document.getElementById("button-capture");
 $buttonSnap.addEventListener("click",(e)=>
 {
@@ -26,13 +44,13 @@ $buttonSnap.addEventListener("click",(e)=>
         }
         
         const realtimeCaptureURL = (window.URL) ? window.URL.createObjectURL(blob) : window.webkitURL.createObjectURL(blob);
-        console.log("Capture Object: " + blob + " // Capture URL: " + realtimeCaptureURL);
+        console.log("Capture URL: " + realtimeCaptureURL);
 
         unityAvatarInstance.SendMessage('BrowserCallback', 'SetCaptureURL', realtimeCaptureURL);
     },'image/jpeg');
 });
 
-ActiveWebCam();
+//LOAD AVATAR CAPTURE CREATED BY UNITY
 
 function LoadImage(key) {
 
@@ -68,15 +86,4 @@ function LoadImage(key) {
     request.onerror = function (event) {
         console.log("Error accessing IndexedDB database");
     };
-}
-
-function ActiveWebCam()
-{
-    if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)
-    {
-        navigator.mediaDevices.getUserMedia({video:true}).then((stream)=>{
-            $videoCapture.srcObject = stream;
-            $videoCapture.play();
-        });
-    }
 }
