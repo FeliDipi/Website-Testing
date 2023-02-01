@@ -19,9 +19,17 @@ const $buttonSnap = document.getElementById("button-capture");
 $buttonSnap.addEventListener("click",(e)=>
 {
     contextCapture.drawImage($videoCapture,0,0,$canvasCapture.width,$canvasCapture.height);
-    let realtimeCaptureURL = $canvasCapture.toDataURL('image/jpeg');
+    $canvasCapture.toBlob((blob) => {
+        if (blob === null) {
+          console.log("Failed to convert canvas to blob");
+          return;
+        }
+        
+        const realtimeCaptureURL = (window.URL) ? window.URL.createObjectURL(blob) : window.webkitURL.createObjectURL(blob);
+        console.log("Capture Object: " + blob + " // Capture URL: " + realtimeCaptureURL);
 
-    unityAvatarInstance.SendMessage('BrowserCallback', 'SetCaptureURL', realtimeCaptureURL);
+        unityAvatarInstance.SendMessage('BrowserCallback', 'SetCaptureURL', realtimeCaptureURL);
+    },'image/jpeg');
 });
 
 ActiveWebCam();
