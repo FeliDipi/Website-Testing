@@ -1,10 +1,9 @@
-let UnityInstance = document.getElementById("unity-canvas");
 let input = document.getElementById("input-capture");
 $input.onchange = function(e){
     const [file] = $input.files;
     if (file) {
         var captureURL = URL.createObjectURL(file);
-        UnityInstance.SendMessage('BrowserHook', 'SetCaptureURL', captureURL);
+        unityAvatarInstance.SendMessage('BrowserHook', 'SetCaptureURL', captureURL);
     }
   }
 

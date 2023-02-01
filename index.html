@@ -11,6 +11,7 @@
     <img id="avatar-image" src="" alt="">
     <script src="Build/POCAT14.loader.js"></script>
     <script>
+      var unityAvatarInstance = null;
       createUnityInstance(document.querySelector("#unity-canvas"), {
         dataUrl: "Build/POCAT14.data",
         frameworkUrl: "Build/POCAT14.framework.js",
@@ -21,6 +22,9 @@
         productVersion: "0.1.1",
         // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
         // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
+      }).then((unityInstance)=>
+      {
+          unityAvatarInstance = unityInstance;
       });
     </script>
     <script src="app.js"></script>
