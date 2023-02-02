@@ -91,5 +91,8 @@ function LoadImage(key) {
 const $unityCanvas = document.getElementById("unity-canvas");
 const $buttonDT = document.getElementById("button-dt");
 $buttonDT.addEventListener("click",(e)=>{
-    $unityCanvas.style.display = "block";
+
+    let displayState = $unityCanvas.style.display;
+
+    $unityCanvas.style.display = displayState=="block"?"none":"block";
 });
