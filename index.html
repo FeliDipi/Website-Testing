@@ -9,18 +9,27 @@
   <body style="text-align: center">
     <div id="content-capture">
       <div id="upload-capture">
-        <input id="input-capture" type="file" accept="image/png, image/jpeg">
-        <img id="image-capture" src="">
+        <input class="file-select" id="input-capture" type="file" accept="image/png, image/jpeg">
+        <div class="image-capture-content">
+          <img id="image-capture" src="">
+        </div>
       </div>
       <div id="realtime-capture">
-        <video id="video-capture" width="640" height="480" muted autoplay></video>
-        <button id="button-webcam-capture">Active Webcam</button>
-        <button id="button-capture">Take Photo</button>
-        <canvas id="snap-capture" width="640" height="480"></canvas>
+        <div class="button-capture-content">
+          <button class="button" id="button-webcam-capture">Active Webcam</button>
+          <button class="button" id="button-capture">Take Photo</button>
+        </div>
+        <div class="realtime-capture-content">
+          <video id="video-capture" width="400" height="400" muted autoplay></video>
+          <canvas id="snap-capture" width="400" height="400"></canvas>
+        </div>
+      </div>
+      <div class="avatar-image-content">
+        <img id="avatar-image" src="" alt="">
       </div> 
     </div>
+    <button class="button" id="button-dt">Active DigitalTwin</button>
     <canvas id="unity-canvas" width=800 height=600 style="width: 800px; height: 600px; background: #231F20"></canvas>
-    <img id="avatar-image" src="" alt="">
     <script src="Build/POCAT14.loader.js"></script>
     <script>
       var unityAvatarInstance = null;

@@ -87,3 +87,9 @@ function LoadImage(key) {
         console.log("Error accessing IndexedDB database");
     };
 }
+
+const $unityCanvas = document.getElementById("unity-canvas");
+const $buttonDT = document.getElementById("button-dt");
+$buttonDT.addEventListener("click",(e)=>{
+    $unityCanvas.style.display = "block";
+});
