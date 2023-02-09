@@ -96,3 +96,25 @@ $buttonDT.addEventListener("click",(e)=>{
 
     $unityCanvas.style.display = displayState=="block"?"none":"block";
 });
+
+//SETUP OF SELECTION SPOT 
+function LoadSpots(roomIDs)
+{
+    const $spotSelection =  document.getElementById("spots");
+
+    var arrayRoomIDs = roomIDs.split(",");
+    arrayRoomIDs.pop();
+    
+    arrayRoomIDs.forEach((value)=>
+    {
+        var newOpt = document.createElement("option");
+        newOpt.value = value;
+        newOpt.innerHTML = value;
+        $spotSelection.appendChild(newOpt);
+    });
+    
+    $spotSelection.addEventListener("change",(e)=>
+    {
+        unityAvatarInstance.SendMessage('BrowserCallback', 'SetSpot', e.target.value);
+    });
+}
