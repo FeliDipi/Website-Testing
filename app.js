@@ -123,7 +123,7 @@ function LoadCameras(types)
 {
     const $camTypesSelection =  document.getElementById("cameraTypes");
 
-    var arrayCamTypes = roomIDs.split(",");
+    var arrayCamTypes = types.split(",");
     
     arrayCamTypes.forEach((value)=>
     {
