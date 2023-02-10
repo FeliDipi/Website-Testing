@@ -118,3 +118,23 @@ function LoadSpots(roomIDs)
         unityAvatarInstance.SendMessage('BrowserCallback', 'SetSpot', e.target.value);
     });
 }
+
+function LoadCameras(types)
+{
+    const $camTypesSelection =  document.getElementById("cameraTypes");
+
+    var arrayCamTypes = roomIDs.split(",");
+    
+    arrayCamTypes.forEach((value)=>
+    {
+        var newOpt = document.createElement("option");
+        newOpt.value = value;
+        newOpt.innerHTML = value;
+        $camTypesSelection.appendChild(newOpt);
+    });
+    
+    $camTypesSelection.addEventListener("change",(e)=>
+    {
+        unityAvatarInstance.SendMessage('BrowserCallback', 'SetCameraType', e.target.value);
+    });
+}
