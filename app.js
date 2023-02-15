@@ -109,8 +109,8 @@ $buttonCloseOpenDT.addEventListener("click",(e)=>{
 //SETUP OF SELECTION SPOT 
 function LoadSpots(roomIDs)
 {
-    const $unityFormContent = document.querySelector(".unity-form-content");//doing visible camera view type and spots selectors
-    $unityFormContent.classList.remove("hidden");
+    const $unityFormContent = document.querySelector(".unity-form-content");
+    $unityFormContent.classList.remove("hidden");//doing visible camera view type and spots selectors
 
     const $spotSelection =  document.querySelector("#spots");//get form element
 
