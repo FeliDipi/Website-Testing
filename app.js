@@ -87,6 +87,8 @@ function LoadImage(key) {
             let img = document.querySelector(".avatar-capture");
             img.setAttribute("src", imgURL);
             img.classList.add("full");
+
+            $loadingIcon.classList.add("hidden");
         };
     }
 
@@ -107,7 +109,8 @@ $buttonCloseOpenDT.addEventListener("click",(e)=>{
 //SETUP OF SELECTION SPOT 
 function LoadSpots(roomIDs)
 {
-    document.querySelector(".unity-form-content").classList("hidden");//doing visible camera view type and spots selectors
+    const $unityFormContent = document.querySelector(".unity-form-content");//doing visible camera view type and spots selectors
+    $unityFormContent.classList.remove("hidden");
 
     const $spotSelection =  document.querySelector("#spots");//get form element
 
