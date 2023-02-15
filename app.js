@@ -1,57 +1,63 @@
-//INPUT CAPTURE
+$loadingIcon = document.querySelector(".loading-content");
 
-const $input = document.getElementById("input-capture");
+//INPUT CAPTURE
+const $input = document.querySelector("#file");
 $input.addEventListener("change", (e)=>
 {
     const [file] = $input.files;
     if (file) {
         var captureURL = URL.createObjectURL(file);
-        let imgCapture = document.getElementById("image-capture");
+        let imgCapture = document.querySelector(".photo");
         imgCapture.setAttribute("src", captureURL);
 
+        $loadingIcon.classList.remove("hidden");
         unityAvatarInstance.SendMessage('BrowserCallback', 'SetCaptureURL', captureURL);
     }
 });
 
 //REALTIME CAPTURE
-
-const $videoCapture = document.getElementById("video-capture");
-const $canvasCapture = document.getElementById("snap-capture");
+const $videoCapture = document.querySelector(".webcam");
+const $canvasCapture = document.querySelector(".snapshot");
 let contextCapture = $canvasCapture.getContext("2d");
 
 //active webcam to take snap
-const $buttonWebcam = document.getElementById("button-webcam-capture")
+const $buttonWebcam = document.querySelector("#btn-webcam")
 $buttonWebcam.addEventListener("click",(e)=>
 {
-    if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)
+    if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && !$videoCapture.classList.contains("hidden"))
     {
         navigator.mediaDevices.getUserMedia({video:true}).then((stream)=>{
+
             $videoCapture.srcObject = stream;
             $videoCapture.play();
+
+            //take snapshot after 3 seconds remaining
+            setTimeout(()=>
+            {
+                $videoCapture.classList.add("hidden");
+                contextCapture.drawImage($videoCapture,0,0,$canvasCapture.width,$canvasCapture.height);
+                $canvasCapture.toBlob((blob) => {
+                    if (blob === null) {
+                      console.log("Failed to convert canvas to blob");
+                      return;
+                    }
+                    
+                    const realtimeCaptureURL = (window.URL) ? window.URL.createObjectURL(blob) : window.webkitURL.createObjectURL(blob);
+                    console.log("Capture URL: " + realtimeCaptureURL);
+        
+                    let imgCapture = document.querySelector(".capture");
+                    imgCapture.setAttribute("src", realtimeCaptureURL);
+            
+                    $loadingIcon.classList.remove("hidden");
+                    unityAvatarInstance.SendMessage('BrowserCallback', 'SetCaptureURL', realtimeCaptureURL);
+                },'image/jpeg');
+            },3000);
+
         });
     }
 })
 
-//display capture taked and send capture url to Unity
-const $buttonSnap = document.getElementById("button-capture");
-$buttonSnap.addEventListener("click",(e)=>
-{
-    contextCapture.drawImage($videoCapture,0,0,$canvasCapture.width,$canvasCapture.height);
-    $canvasCapture.toBlob((blob) => {
-        if (blob === null) {
-          console.log("Failed to convert canvas to blob");
-          return;
-        }
-        
-        const realtimeCaptureURL = (window.URL) ? window.URL.createObjectURL(blob) : window.webkitURL.createObjectURL(blob);
-        console.log("Capture URL: " + realtimeCaptureURL);
-
-        unityAvatarInstance.SendMessage('BrowserCallback', 'SetCaptureURL', realtimeCaptureURL);
-    },'image/jpeg');
-});
-
 //LOAD AVATAR CAPTURE CREATED BY UNITY
-
 function LoadImage(key) {
 
     console.log("Avatar Capture key: " + key);
@@ -78,8 +84,9 @@ function LoadImage(key) {
             var imgURL = (window.URL) ? window.URL.createObjectURL(blob) : window.webkitURL.createObjectURL(blob);
 
             // Set img src to ObjectURL
-            let img = document.getElementById("avatar-image");
+            let img = document.querySelector(".avatar-capture");
             img.setAttribute("src", imgURL);
+            img.classList.add("full");
         };
     }
 
@@ -88,23 +95,29 @@ function LoadImage(key) {
     };
 }
 
-const $unityCanvas = document.getElementById("unity-canvas");
-const $buttonDT = document.getElementById("button-dt");
-$buttonDT.addEventListener("click",(e)=>{
+//Enable or disable Unity project
+const $unityCanvas = document.querySelector("#unity-canvas");
+const $buttonCloseOpenDT = document.querySelector(".btn-closeOpen");
+$buttonCloseOpenDT.addEventListener("click",(e)=>{
 
-    let displayState = $unityCanvas.style.display;
-
-    $unityCanvas.style.display = displayState=="block"?"none":"block";
+    if($unityCanvas.classList.contains("hidden")) $unityCanvas.classList.remove("hidden");
+    else $unityCanvas.classList.add("hidden");
 });
 
 //SETUP OF SELECTION SPOT 
 function LoadSpots(roomIDs)
 {
-    const $spotSelection =  document.getElementById("spots");
+    document.querySelector(".unity-form-content").classList("hidden");//doing visible camera view type and spots selectors
 
+    const $spotSelection =  document.querySelector("#spots");//get form element
+
+    // var arrayRoomIDs = ["420A_CORNER_LEFT_RIGHT","420A_BATHROOM"];//testing array
+
+    //create array of spot from data input
     var arrayRoomIDs = roomIDs.split(",");
     arrayRoomIDs.pop();
     
+    //setup array value on form element
     arrayRoomIDs.forEach((value)=>
     {
         var newOpt = document.createElement("option");
@@ -113,18 +126,24 @@ function LoadSpots(roomIDs)
         $spotSelection.appendChild(newOpt);
     });
     
+    //add select event
     $spotSelection.addEventListener("change",(e)=>
     {
-        unityAvatarInstance.SendMessage('BrowserCallback', 'SetSpot', e.target.value);
+        unityAvatarInstance.SendMessage('BrowserCallback', 'SetSpot', e.target.value);//call selection Spot method in Unity
     });
 }
 
+//SETUP OF SELECTION CAMERA VIEW
 function LoadCameras(types)
 {
-    const $camTypesSelection =  document.getElementById("cameraTypes");
+    const $camTypesSelection =  document.querySelector("#cameraTypes");//get form element
 
+    // var arrayCamTypes = ["Spot","First","Third"];//testing array
+
+    //setup array value on form element
     var arrayCamTypes = types.split(",");
     
+    //setup array value on form element
     arrayCamTypes.forEach((value)=>
     {
         var newOpt = document.createElement("option");
@@ -133,8 +152,9 @@ function LoadCameras(types)
         $camTypesSelection.appendChild(newOpt);
     });
     
+    //add select event
     $camTypesSelection.addEventListener("change",(e)=>
     {
-        unityAvatarInstance.SendMessage('BrowserCallback', 'SetCameraType', e.target.value);
+        unityAvatarInstance.SendMessage('BrowserCallback', 'SetCameraType', e.target.value);//call selection camera view method in Unity
     });
 }

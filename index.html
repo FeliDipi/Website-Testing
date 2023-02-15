@@ -3,41 +3,68 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | Avatar Generator</title>
+    <title>Novathena || Testing Avatar Creation WEBSITE</title>
     <link rel="stylesheet" href="style.css">
   </head>
-  <body style="text-align: center">
-    <div id="content-capture">
-      <div id="upload-capture">
-        <input class="file-select" id="input-capture" type="file" accept="image/png, image/jpeg">
-        <div class="image-capture-content">
-          <img id="image-capture" src="">
-        </div>
-      </div>
-      <div id="realtime-capture">
-        <div class="button-capture-content">
-          <button class="button" id="button-webcam-capture">Active Webcam</button>
-          <button class="button" id="button-capture">Take Photo</button>
-        </div>
-        <div class="realtime-capture-content">
-          <video id="video-capture" width="400" height="400" muted autoplay></video>
-          <canvas id="snap-capture" width="400" height="400"></canvas>
-        </div>
-      </div>
-      <div class="avatar-image-content">
-        <img id="avatar-image" src="" alt="">
-      </div> 
+  <body>
+    <!-- BACKGROUND & LOGO -->
+    <img src="Images/bg_1.png" alt="" class="background">
+    <img src="Images/bg_0.png" alt="" class="background">
+    <div class="logo-content center">
+      <img src="Images/novathena_logo.png" alt="" class="logo">
     </div>
-    <button class="button" id="button-dt">Active DigitalTwin</button>
-    <canvas id="unity-canvas" width=800 height=600 style="width: 800px; height: 600px; background: #231F20"></canvas>
-    <form> Select Spot
-      <select id="spots">
-      </select>
-    </form>
-    <form> Select Camera Type
-      <select id="cameraTypes">
-      </select>
-    </form>
+    <!-- MAIN ELEMENT SUCH INPUTS AND UNITY CANVAS PROJECT -->
+    <div class="main-elements center">
+      <div class="inputs center">
+        <!-- INPUT PHOTO AND CAPTURE -->
+        <div class="input-group center">
+          <div class="input-content center">
+            <img src="Images/avatar-icon.png" alt="" class="avatar-icon">
+            <img src="" alt="" class="photo">
+            <input type="file" id="file" accept="image/*" class="hidden">
+            <label for="file" class="btn-input-photo">
+              <img src="Images/upload_icon.png" alt="" class="btn-icon">
+            </label>
+          </div>
+          <div class="input-content center">
+            <img src="Images/avatar-icon.png" alt="" class="avatar-icon">
+            <canvas class="snapshot hidden" width="400px" height="400px"></canvas>
+            <img src="" alt="" class="capture">
+            <video class="webcam" muted autoplay></video>
+            <button id="btn-webcam" class="btn-input-photo">
+              <img src="Images/capture_icon.png" alt="" class="btn-icon">
+            </button>
+          </div>
+        </div>
+        <!-- CAPTURE OF THE AVATAR GENERATED IN UNITY -->
+        <div class="avatar-capture-content center">
+          <img class="avatar-capture" src="Images/avatar_placeholder.png" alt="">
+          <!-- <img class="full" src="TestImages/avatar.png" alt=""> -->
+          <div class="loading-content center hidden">
+            Loading
+            <iconify-icon icon="eos-icons:bubble-loading" class="loading-icon" ></iconify-icon>
+          </div>
+        </div> 
+      </div>
+      <!-- CANVAS OF UNITY PROJECT -->
+      <div class="avatar-unity-content center">
+        <canvas id="unity-canvas" class=""></canvas>
+        <div class="unity-form-content center hidden">
+          <form class="unity-form-select center"> Select Spot
+            <select class="form-select" id="spots">
+            </select>
+          </form>
+          <form class="unity-form-select center"> Select Camera Type
+            <select class="form-select" id="cameraTypes">
+            </select>
+          </form>
+        </div>
+        <button class="btn-closeOpen center">
+          <iconify-icon icon="ic:round-close" class="close-icon"></iconify-icon>
+        </button>
+      </div>
+    </div>
+    <!-- SCRIPTS -->
     <script src="Build/POCAT14.loader.js"></script>
     <script>
       var unityAvatarInstance = null;
@@ -57,5 +84,6 @@
       });
     </script>
     <script src="app.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.5/iconify-icon.min.js"></script>
   </body>
 </html>
