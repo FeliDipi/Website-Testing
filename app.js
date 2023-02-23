@@ -1,20 +1,9 @@
 function ExecuteEvent(event)
 {
-    var eventJson = JSON.parse(event);
-
-    switch(eventJson.key)
+    //SDK LOADED, WEB PAGE ALREADY FOR USING
+    const LoadPage = ()=>
     {
-        case "cameraTypes": LoadCameras(eventJson.data);
-            break;
-        case "spotsIDs": LoadSpots(eventJson.data);
-            break;
-        case "loadCapture": LoadImage(eventJson.data);
-            break;
-        case "loadedSDK": console.log("SDK LOADED");
-            break;
-        default:
-            console.log(`Event with event key: ${eventJson.key} not found`);
-            break;
+        console.log("SDK LOADED");
     }
 
     //LOAD AVATAR CAPTURE CREATED BY UNITY
@@ -126,6 +115,22 @@ function ExecuteEvent(event)
         });
     }
 
+    var eventJson = JSON.parse(event);
+
+    switch(eventJson.key)
+    {
+        case "cameraTypes": LoadCameras(eventJson.data);
+            break;
+        case "spotsIDs": LoadSpots(eventJson.data);
+            break;
+        case "loadCapture": LoadImage(eventJson.data);
+            break;
+        case "loadedSDK": LoadPage();
+            break;
+        default:
+            console.log(`Event with event key: ${eventJson.key} not found`);
+            break;
+    }
 }
 //INITIALIZE THE WEBSITE FUNCTIONS WHEN THE UNITY PROJECT IS ALREADY
 const Initialize = ()=>
