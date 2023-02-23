@@ -10,17 +10,11 @@ function ExecuteEvent(event)
             break;
         case "loadCapture": LoadImage(eventJson.data);
             break;
-        case "loadedSDK": LoadPage();
+        case "loadedSDK": console.log("SDK LOADED");
             break;
         default:
             console.log(`Event with event key: ${eventJson.key} not found`);
             break;
-    }
-
-    //SDK LOADED, WEB PAGE ALREADY FOR USING
-    const LoadPage = ()=>
-    {
-        console.log("SDK LOADED");
     }
 
     //LOAD AVATAR CAPTURE CREATED BY UNITY
