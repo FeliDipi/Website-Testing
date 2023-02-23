@@ -54,11 +54,8 @@ function ExecuteEvent(event)
 
         const $spotSelection =  document.querySelector("#spots");//get form element
 
-        // var arrayRoomIDs = ["420A_CORNER_LEFT_RIGHT","420A_BATHROOM"];//testing array
-
         //create array of spot from data input
-        var arrayRoomIDs = roomIDs.split(",");
-        arrayRoomIDs.pop();
+        var arrayRoomIDs = JSON.parse(roomIDs);
         
         //setup array value on form element
         arrayRoomIDs.forEach((value)=>
@@ -88,9 +85,9 @@ function ExecuteEvent(event)
     const LoadCameras = (types)=>
     {
         const $camTypesSelection =  document.querySelector("#cameraTypes");//get form element
-
-        // var arrayCamTypes = ["Spot","First","Third"];//testing array
         
+        arrayCamTypes = JSON.parse(types);
+
         //setup array value on form element
         arrayCamTypes.forEach((value)=>
         {
