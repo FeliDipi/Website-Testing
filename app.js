@@ -10,8 +10,8 @@ function ExecuteEvent(event)
             break;
         case "loadCapture": LoadImage(eventJson.data);
             break;
-        case "loadedSDK": Initialize();
-            break;
+        // case "loadedSDK": Initialize();
+        //     break;
         default:
             console.log(`Event with event key: ${eventJson.key} not found`);
             break;
@@ -122,88 +122,92 @@ function ExecuteEvent(event)
         });
     }
 
-    //INITIALIZE THE WEBSITE FUNCTIONS WHEN THE UNITY PROJECT IS ALREADY
-    const Initialize = ()=>
-    {
-        $loadingIcon = document.querySelector(".loading-content");
-        
-        //INPUT CAPTURE
-        const $input = document.querySelector("#file");
-        $input.addEventListener("change", (e)=>
-        {
-            const [file] = $input.files;
-            if (file) {
-                var captureURL = URL.createObjectURL(file);
-                let imgCapture = document.querySelector(".photo");
-                imgCapture.setAttribute("src", captureURL);
-        
-                var event=
-                {
-                    key:"CaptureMessage",
-                    data:captureURL
-                }
-        
-                $loadingIcon.classList.remove("hidden");
-                unityAvatarInstance.SendMessage('MessageHandler', 'SendNewEvent', JSON.stringify(event));
-            }
-        });
-        
-        //REALTIME CAPTURE
-        const $videoCapture = document.querySelector(".webcam");
-        const $canvasCapture = document.querySelector(".snapshot");
-        let contextCapture = $canvasCapture.getContext("2d");
-        
-        //active webcam to take snap
-        const $buttonWebcam = document.querySelector("#btn-webcam")
-        $buttonWebcam.addEventListener("click",(e)=>
-        {
-            if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && !$videoCapture.classList.contains("hidden"))
-            {
-                navigator.mediaDevices.getUserMedia({video:true}).then((stream)=>{
-        
-                    $videoCapture.srcObject = stream;
-                    $videoCapture.play();
-        
-                    //take snapshot after 3 seconds remaining
-                    setTimeout(()=>
-                    {
-                        $videoCapture.classList.add("hidden");
-                        contextCapture.drawImage($videoCapture,0,0,$canvasCapture.width,$canvasCapture.height);
-                        $canvasCapture.toBlob((blob) => {
-                            if (blob === null) {
-                            console.log("Failed to convert canvas to blob");
-                            return;
-                            }
-                            
-                            const realtimeCaptureURL = (window.URL) ? window.URL.createObjectURL(blob) : window.webkitURL.createObjectURL(blob);
-                            console.log("Capture URL: " + realtimeCaptureURL);
-                
-                            let imgCapture = document.querySelector(".capture");
-                            imgCapture.setAttribute("src", realtimeCaptureURL);
-                    
-                            $loadingIcon.classList.remove("hidden");
-        
-                            var event=
-                            {
-                                key:"CaptureMessage",
-                                data:realtimeCaptureURL
-                            }
-        
-                            unityAvatarInstance.SendMessage('MessageHandler', 'SendNewEvent', JSON.stringify(event));
-                        },'image/jpeg');
-                    },3000);
-        
-                });
-            }
-        })
-        
-        //Enable or disable Unity project
-        const $unityCanvas = document.querySelector("#unity-canvas");
-        const $buttonCloseOpenDT = document.querySelector(".btn-closeOpen");
-        $buttonCloseOpenDT.addEventListener("click",(e)=>{
-        
-            if($unityCanvas.classList.contains("hidden")) $unityCanvas.classList.remove("hidden");
-            else $unityCanvas.classList.add("hidden");
-        });
-    }
 }
+//INITIALIZE THE WEBSITE FUNCTIONS WHEN THE UNITY PROJECT IS ALREADY
+const Initialize = ()=>
+{
+    console.log("Initialize Web Site");
+
+    $loadingIcon = document.querySelector(".loading-content");
+    
+    //INPUT CAPTURE
+    const $input = document.querySelector("#file");
+    $input.addEventListener("change", (e)=>
+    {
+        const [file] = $input.files;
+        if (file) {
+            var captureURL = URL.createObjectURL(file);
+            let imgCapture = document.querySelector(".photo");
+            imgCapture.setAttribute("src", captureURL);
+    
+            var event=
+            {
+                key:"CaptureMessage",
+                data:captureURL
+            }
+    
+            $loadingIcon.classList.remove("hidden");
+            unityAvatarInstance.SendMessage('MessageHandler', 'SendNewEvent', JSON.stringify(event));
+        }
+    });
+    
+    //REALTIME CAPTURE
+    const $videoCapture = document.querySelector(".webcam");
+    const $canvasCapture = document.querySelector(".snapshot");
+    let contextCapture = $canvasCapture.getContext("2d");
+    
+    //active webcam to take snap
+    const $buttonWebcam = document.querySelector("#btn-webcam")
+    $buttonWebcam.addEventListener("click",(e)=>
+    {
+        if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && !$videoCapture.classList.contains("hidden"))
+        {
+            navigator.mediaDevices.getUserMedia({video:true}).then((stream)=>{
+    
+                $videoCapture.srcObject = stream;
+                $videoCapture.play();
+    
+                //take snapshot after 3 seconds remaining
+                setTimeout(()=>
+                {
+                    $videoCapture.classList.add("hidden");
+                    contextCapture.drawImage($videoCapture,0,0,$canvasCapture.width,$canvasCapture.height);
+                    $canvasCapture.toBlob((blob) => {
+                        if (blob === null) {
+                        console.log("Failed to convert canvas to blob");
+                        return;
+                        }
+                        
+                        const realtimeCaptureURL = (window.URL) ? window.URL.createObjectURL(blob) : window.webkitURL.createObjectURL(blob);
+                        console.log("Capture URL: " + realtimeCaptureURL);
+            
+                        let imgCapture = document.querySelector(".capture");
+                        imgCapture.setAttribute("src", realtimeCaptureURL);
+                
+                        $loadingIcon.classList.remove("hidden");
+    
+                        var event=
+                        {
+                            key:"CaptureMessage",
+                            data:realtimeCaptureURL
+                        }
+    
+                        unityAvatarInstance.SendMessage('MessageHandler', 'SendNewEvent', JSON.stringify(event));
+                    },'image/jpeg');
+                },3000);
+    
+            });
+        }
+    })
+    
+    //Enable or disable Unity project
+    const $unityCanvas = document.querySelector("#unity-canvas");
+    const $buttonCloseOpenDT = document.querySelector(".btn-closeOpen");
+    $buttonCloseOpenDT.addEventListener("click",(e)=>{
+    
+        if($unityCanvas.classList.contains("hidden")) $unityCanvas.classList.remove("hidden");
+        else $unityCanvas.classList.add("hidden");
+    });
+}
+
+Initialize();
