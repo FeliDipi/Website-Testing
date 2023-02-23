@@ -10,11 +10,17 @@ function ExecuteEvent(event)
             break;
         case "loadCapture": LoadImage(eventJson.data);
             break;
-        // case "loadedSDK": Initialize();
-        //     break;
+        case "loadedSDK": LoadPage();
+            break;
         default:
             console.log(`Event with event key: ${eventJson.key} not found`);
             break;
+    }
+
+    //SDK LOADED, WEB PAGE ALREADY FOR USING
+    const LoadPage = ()=>
+    {
+        console.log("SDK LOADED");
     }
 
     //LOAD AVATAR CAPTURE CREATED BY UNITY
@@ -89,7 +95,9 @@ function ExecuteEvent(event)
                 data:e.target.value
             }
 
-            unityAvatarInstance.SendMessage('MessageHandler', 'SendNewEvent', JSON.stringify(event));//call selection Spot method in Unity
+            var eventStr = JSON.stringify(event);
+
+            unityAvatarInstance.SendMessage('MessageHandler', 'SendNewEvent', eventStr);//call selection Spot method in Unity
         });
     }
 
@@ -118,7 +126,9 @@ function ExecuteEvent(event)
                 data:e.target.value
             }
 
-            unityAvatarInstance.SendMessage('MessageHandler', 'SendNewEvent', JSON.stringify(event));//call selection camera view method in Unity
+            var eventStr = JSON.stringify(event);
+
+            unityAvatarInstance.SendMessage('MessageHandler', 'SendNewEvent', eventStr);//call selection camera view method in Unity
         });
     }
 
@@ -145,9 +155,11 @@ const Initialize = ()=>
                 key:"CaptureMessage",
                 data:captureURL
             }
+
+            var eventStr = JSON.stringify(event);
     
             $loadingIcon.classList.remove("hidden");
-            unityAvatarInstance.SendMessage('MessageHandler', 'SendNewEvent', JSON.stringify(event));
+            unityAvatarInstance.SendMessage('MessageHandler', 'SendNewEvent', eventStr);
         }
     });
     
@@ -191,8 +203,10 @@ const Initialize = ()=>
                             key:"CaptureMessage",
                             data:realtimeCaptureURL
                         }
+
+                        var eventStr = JSON.stringify(event);
     
-                        unityAvatarInstance.SendMessage('MessageHandler', 'SendNewEvent', JSON.stringify(event));
+                        unityAvatarInstance.SendMessage('MessageHandler', 'SendNewEvent', eventStr);
                     },'image/jpeg');
                 },3000);
     
