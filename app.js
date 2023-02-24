@@ -48,9 +48,44 @@ function ExecuteEvent(event)
         };
     }
 
+    const LoadSimulationControl = () =>
+    {
+        const $btnPlay = document.querySelector("#btn-play-simulation");
+        const $btnStop = document.querySelector("#btn-stop-simulation");
+
+        $btnPlay.addEventListener("click",(e)=>{
+            var event=
+            {
+                key:"SimulationMessage",
+                data:"play"
+            }
+
+            var eventStr = JSON.stringify(event);
+
+            unityAvatarInstance.SendMessage('MessageHandler', 'SendNewEvent', eventStr);//call play simulation method in Unity
+        });
+
+        $btnStop.addEventListener("click",(e)=>{
+            var event=
+            {
+                key:"SimulationMessage",
+                data:"stop"
+            }
+
+            var eventStr = JSON.stringify(event);
+
+            unityAvatarInstance.SendMessage('MessageHandler', 'SendNewEvent', eventStr);//call stop simulation method in Unity
+        });
+    }
+
     //SETUP OF SELECTION SPOT 
     const LoadSpots = (roomIDs)=>
     {
+        const $simulationBtnContent = document.querySelector(".simulation-btns-content");
+        $simulationBtnContent.classList.remove("hidden");//doing visible btn for control the simulation
+
+        LoadSimulationControl();
+
         const $unityFormContent = document.querySelector(".unity-form-content");
         $unityFormContent.classList.remove("hidden");//doing visible camera view type and spots selectors
 

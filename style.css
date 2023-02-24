@@ -252,6 +252,35 @@ body
     top: 2%;
 }
 
+.simulation-btns-content
+{
+    position: absolute;
+    bottom:2%;
+    left:0%;
+    width: 20%;
+    height: auto;
+}
+
+.btn-simulate
+{
+    cursor: pointer;
+
+    background-color: var(--color-2);
+    border: none;
+    padding: 0.75rem;
+    border-radius: 10%;
+    width: 50px;
+    height:50px;
+    margin:10px;
+
+    transition: 0.1s ease-in-out;
+}
+
+.btn-simulate:hover
+{
+    transform: scale(0.9);
+}
+
 .unity-form-select
 {
     background-color: var(--color-2);
