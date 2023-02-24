@@ -4,6 +4,8 @@ function ExecuteEvent(event)
     const LoadPage = ()=>
     {
         console.log("SDK LOADED");
+        const $loadingPageContent = document.querySelector(".load-page-content");
+        $loadingPageContent.classList.add("hidden-opacity");
     }
 
     //LOAD AVATAR CAPTURE CREATED BY UNITY
