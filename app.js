@@ -79,16 +79,19 @@ function ExecuteEvent(event)
         });
 
         $btnAdd.addEventListener("click",(e)=>{
+
+            var dataSim = 
+            {
+                id:"Bed",
+                state:"inprogress",
+                message:"Wipe",
+                duration:15
+            }
+
             var event=
             {
                 key:"SimulationMessage",
-                data:
-                {
-                    id:"Bed",
-                    state:"inprogress",
-                    message:"Wipe",
-                    duration:5
-                }
+                data: JSON.stringify(dataSim)
             }
 
             var eventStr = JSON.stringify(event);
