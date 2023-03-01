@@ -196,7 +196,7 @@ const Initialize = ()=>
     //INPUT CAPTURE
     const $input = document.querySelector("#file");
     $input.addEventListener("change", (e)=>
-    {FishHero - Android
+    {
         const [file] = $input.files;
         if (file) {
             var captureURL = URL.createObjectURL(file);
