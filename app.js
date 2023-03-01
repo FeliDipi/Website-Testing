@@ -52,11 +52,12 @@ function ExecuteEvent(event)
     {
         const $btnPlay = document.querySelector("#btn-play-simulation");
         const $btnStop = document.querySelector("#btn-stop-simulation");
+        const $btnAdd= document.querySelector("#btn-add-simulation");
 
         $btnPlay.addEventListener("click",(e)=>{
             var event=
             {
-                key:"SimulationMessage",
+                key:"SimulationControllerMessage",
                 data:"play"
             }
 
@@ -68,8 +69,26 @@ function ExecuteEvent(event)
         $btnStop.addEventListener("click",(e)=>{
             var event=
             {
-                key:"SimulationMessage",
+                key:"SimulationControllerMessage",
                 data:"stop"
+            }
+
+            var eventStr = JSON.stringify(event);
+
+            unityAvatarInstance.SendMessage('MessageHandler', 'SendNewEvent', eventStr);//call stop simulation method in Unity
+        });
+
+        $btnAdd.addEventListener("click",(e)=>{
+            var event=
+            {
+                key:"SimulationMessage",
+                data:
+                {
+                    id:"Bed",
+                    state:"inprogress",
+                    message:"Wipe",
+                    duration:5
+                }
             }
 
             var eventStr = JSON.stringify(event);
@@ -166,6 +185,7 @@ function ExecuteEvent(event)
             break;
     }
 }
+
 //INITIALIZE THE WEBSITE FUNCTIONS WHEN THE UNITY PROJECT IS ALREADY
 const Initialize = ()=>
 {
@@ -176,7 +196,7 @@ const Initialize = ()=>
     //INPUT CAPTURE
     const $input = document.querySelector("#file");
     $input.addEventListener("change", (e)=>
-    {
+    {FishHero - Android
         const [file] = $input.files;
         if (file) {
             var captureURL = URL.createObjectURL(file);
@@ -215,8 +235,8 @@ const Initialize = ()=>
                 //take snapshot after 3 seconds remaining
                 setTimeout(()=>
                 {
-                    $videoCapture.classList.add("hidden");
-                    contextCapture.drawImage($videoCapture,0,0,$canvasCapture.width,$canvasCapture.height);
+                    $videoCapture.classList.add("hidden");//disable webcam
+                    contextCapture.drawImage($videoCapture,0,0,$canvasCapture.width,$canvasCapture.height);//draw capture on canvas element
                     $canvasCapture.toBlob((blob) => {
                         if (blob === null) {
                         console.log("Failed to convert canvas to blob");
