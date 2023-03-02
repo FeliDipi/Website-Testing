@@ -48,11 +48,34 @@ function ExecuteEvent(event)
         };
     }
 
+    const LoadSimulationGuion = () =>
+    {
+        var dataSim= 
+        {
+            id:"Bed",
+            state:"inprogress",
+            message:"Wipe",
+            duration:15
+        }
+
+        var dataSimStr = JSON.stringify(dataSim);
+
+        var event=
+        {
+            key:"SimulationMessage",
+            data:dataSimStr
+        }
+
+        var eventStr = JSON.stringify(event);
+
+        unityAvatarInstance.SendMessage('MessageHandler', 'SendNewEvent', eventStr);//call stop simulation method in Unity
+    }
+
     const LoadSimulationControl = () =>
     {
         const $btnPlay = document.querySelector("#btn-play-simulation");
         const $btnStop = document.querySelector("#btn-stop-simulation");
-        const $btnAdd= document.querySelector("#btn-add-simulation");
+        const $btnChange= document.querySelector("#btn-change-simulation");
 
         $btnPlay.addEventListener("click",(e)=>{
             var event=
@@ -78,25 +101,16 @@ function ExecuteEvent(event)
             unityAvatarInstance.SendMessage('MessageHandler', 'SendNewEvent', eventStr);//call stop simulation method in Unity
         });
 
-        $btnAdd.addEventListener("click",(e)=>{
-
-            var dataSim = 
-            {
-                id:"Bed",
-                state:"inprogress",
-                message:"Wipe",
-                duration:15
-            }
-
+        $btnChange.addEventListener("click",(e)=>{
             var event=
             {
-                key:"SimulationMessage",
-                data: JSON.stringify(dataSim)
+                key:"SimulationControllerMessage",
+                data:"change"
             }
 
             var eventStr = JSON.stringify(event);
 
-            unityAvatarInstance.SendMessage('MessageHandler', 'SendNewEvent', eventStr);//call stop simulation method in Unity
+            unityAvatarInstance.SendMessage('MessageHandler', 'SendNewEvent', eventStr);//call change camera of simulation method in Unity
         });
     }
 
@@ -106,6 +120,7 @@ function ExecuteEvent(event)
         const $simulationBtnContent = document.querySelector(".simulation-btns-content");
         $simulationBtnContent.classList.remove("hidden");//doing visible btn for control the simulation
 
+        LoadSimulationGuion();
         LoadSimulationControl();
 
         const $unityFormContent = document.querySelector(".unity-form-content");
@@ -269,15 +284,6 @@ const Initialize = ()=>
             });
         }
     })
-    
-    //Enable or disable Unity project
-    const $unityCanvas = document.querySelector("#unity-canvas");
-    const $buttonCloseOpenDT = document.querySelector(".btn-closeOpen");
-    $buttonCloseOpenDT.addEventListener("click",(e)=>{
-    
-        if($unityCanvas.classList.contains("hidden")) $unityCanvas.classList.remove("hidden");
-        else $unityCanvas.classList.add("hidden");
-    });
 }
 
 Initialize();
