@@ -256,10 +256,11 @@ body
 .simulation-btns-content
 {
     position: absolute;
-    right: 7%;
+    left: -10%;
     top: -3.5%;
     width: 20%;
     height: auto;
+    flex-direction: column;
 }
 
 .btn-simulate
