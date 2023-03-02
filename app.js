@@ -52,10 +52,10 @@ function ExecuteEvent(event)
     {
         var dataSim= 
         {
-            id:"Bed",
+            id:"Table",
             state:"inprogress",
             message:"Wipe",
-            duration:15
+            duration:20
         }
 
         var dataSimStr = JSON.stringify(dataSim);
@@ -67,6 +67,26 @@ function ExecuteEvent(event)
         }
 
         var eventStr = JSON.stringify(event);
+
+        unityAvatarInstance.SendMessage('MessageHandler', 'SendNewEvent', eventStr);//call stop simulation method in Unity
+
+        dataSim= 
+        {
+            id:"Table",
+            state:"error",
+            message:"Partial Wipe",
+            duration:10
+        }
+
+        dataSimStr = JSON.stringify(dataSim);
+
+        event=
+        {
+            key:"SimulationMessage",
+            data:dataSimStr
+        }
+
+        eventStr = JSON.stringify(event);
 
         unityAvatarInstance.SendMessage('MessageHandler', 'SendNewEvent', eventStr);//call stop simulation method in Unity
     }
