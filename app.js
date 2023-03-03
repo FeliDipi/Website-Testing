@@ -50,40 +50,32 @@ function ExecuteEvent(event)
 
     const LoadSimulationGuion = () =>
     {
-        var dataSim= 
-        {
-            id:"Table",
-            state:"inprogress",
-            message:"Wipe",
-            duration:20
-        }
-
-        var dataSimStr = JSON.stringify(dataSim);
-
         var event=
         {
             key:"SimulationMessage",
-            data:dataSimStr
+            data:
+            {
+                id:"Table",
+                state:"inprogress",
+                message:"Wipe",
+                duration:29
+            }
         }
 
         var eventStr = JSON.stringify(event);
 
         unityAvatarInstance.SendMessage('MessageHandler', 'SendNewEvent', eventStr);//call stop simulation method in Unity
 
-        dataSim= 
-        {
-            id:"Table",
-            state:"error",
-            message:"Partial Wipe",
-            duration:10
-        }
-
-        dataSimStr = JSON.stringify(dataSim);
-
         event=
         {
             key:"SimulationMessage",
-            data:dataSimStr
+            data:
+            {
+                id:"Table",
+                state:"done",
+                message:"Complete Wipe",
+                duration:1
+            }
         }
 
         eventStr = JSON.stringify(event);
