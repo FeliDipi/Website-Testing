@@ -3,87 +3,19 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Novathena || Testing Avatar Creation WEBSITE</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Unity WebGL Player | Avatar Generator</title>
   </head>
-  <body>
-    <div class="load-page-content center">
-      <img src="Images/novathena_logo.png" alt="">
-      <iconify-icon icon="eos-icons:bubble-loading" class="loading-page-icon" ></iconify-icon>
-    </div>
-    <!-- BACKGROUND & LOGO -->
-    <img src="Images/bg_1.png" alt="" class="background">
-    <img src="Images/bg_0.png" alt="" class="background">
-    <div class="logo-content center">
-      <img src="Images/novathena_logo.png" alt="" class="logo">
-    </div>
-    <!-- MAIN ELEMENT SUCH INPUTS AND UNITY CANVAS PROJECT -->
-    <div class="main-elements center">
-      <div class="inputs center">
-        <!-- INPUT PHOTO AND CAPTURE -->
-        <div class="input-group center">
-          <div class="input-content center">
-            <img src="Images/avatar-icon.png" alt="" class="avatar-icon">
-            <img src="" alt="" class="photo">
-            <input type="file" id="file" accept="image/*" class="hidden">
-            <label for="file" class="btn-input-photo">
-              <img src="Images/upload_icon.png" alt="" class="btn-icon">
-            </label>
-          </div>
-          <div class="input-content center">
-            <img src="Images/avatar-icon.png" alt="" class="avatar-icon">
-            <canvas class="snapshot hidden" width="400px" height="400px"></canvas>
-            <img src="" alt="" class="capture">
-            <video class="webcam" muted autoplay></video>
-            <button id="btn-webcam" class="btn-input-photo">
-              <img src="Images/capture_icon.png" alt="" class="btn-icon">
-            </button>
-          </div>
-        </div>
-        <!-- CAPTURE OF THE AVATAR GENERATED IN UNITY -->
-        <div class="avatar-capture-content center">
-          <img class="avatar-capture" src="Images/avatar_placeholder.png" alt="">
-          <!-- <img class="full" src="TestImages/avatar.png" alt=""> -->
-          <div class="loading-content center hidden">
-            Loading
-            <iconify-icon icon="eos-icons:bubble-loading" class="loading-icon" ></iconify-icon>
-          </div>
-        </div> 
-      </div>
-      <!-- CANVAS OF UNITY PROJECT -->
-      <div class="avatar-unity-content center">
-        <canvas id="unity-canvas" class=""></canvas>
-        <div class="unity-form-content center hidden">
-          <form class="unity-form-select center"> Select Spot
-            <select class="form-select" id="spots">
-            </select>
-          </form>
-          <form class="unity-form-select center"> Select Camera Type
-            <select class="form-select" id="cameraTypes">
-            </select>
-          </form>
-        </div>
-        <div class="simulation-btns-content center hidden">
-          <button class="btn-simulate center" id="btn-play-simulation">
-            <iconify-icon icon="material-symbols:play-arrow" class="close-icon"></iconify-icon>
-          </button>
-          <button class="btn-simulate center" id="btn-stop-simulation">
-            <iconify-icon icon="ic:round-stop" class="close-icon"></iconify-icon>
-          </button>
-          <button class="btn-simulate center" id="btn-change-simulation">
-            <iconify-icon icon="ic:round-video-camera-front" class="close-icon"></iconify-icon>
-          </button>
-        </div>
-      </div>
-    </div>
-    <!-- SCRIPTS -->
-    <script src="Build/POCAT14.loader.js"></script>
+  <body style="text-align: center">
+    <canvas id="unity-canvas" width=800 height=600 style="width: 800px; height: 600px; background: #231F20"></canvas>
+    <script src="Build/EVSUNITY.loader.js"></script>
+    <button id="btn-play">Play</button>
+    <button id="btn-add">Add</button>
     <script>
       var unityAvatarInstance = null;
       createUnityInstance(document.querySelector("#unity-canvas"), {
-        dataUrl: "Build/POCAT14.data",
-        frameworkUrl: "Build/POCAT14.framework.js",
-        codeUrl: "Build/POCAT14.wasm",
+        dataUrl: "Build/EVSUNITY.data",
+        frameworkUrl: "Build/EVSUNITY.framework.js",
+        codeUrl: "Build/EVSUNITY.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Novathena",
         productName: "Avatar Generator",
@@ -96,6 +28,5 @@
       });
     </script>
     <script src="app.js"></script>
-    <script src="https://code.iconify.design/iconify-icon/1.0.5/iconify-icon.min.js"></script>
   </body>
 </html>
