@@ -29,6 +29,7 @@ add.addEventListener("click",()=>
           }
       ]
   }
-  var eventStr = JSON.stringify(event);
-  unityAvatarInstance.SendMessage('MessageHandler', 'SendNewEvent', eventStr);//call stop simulation method in Unity
+
+  var eventStrRaw = JSON.stringify(event);
+  unityAvatarInstance.SendMessage('MessageHandler', 'SendNewEvent', eventStrRaw);//call stop simulation method in Unity
 });
